@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -27,6 +28,19 @@ public class KundenController {
     @GetMapping("/kunden")
     public List<Kunde> kunden() {
         return kunden.getKunden();
+    }
+
+    @GetMapping("/kunden/filter")
+    public List<Kunde> filterKunden(@RequestParam(value = "mindestalter", defaultValue = "18") int mindestalter) {
+        List<Kunde> ergebnis = new ArrayList<>();
+
+        for (Kunde kunde : kunden.getKunden()) {
+            if (kunde.alter() >= mindestalter) {
+                ergebnis.add(kunde);
+            }
+        }
+
+        return ergebnis;
     }
 
     @GetMapping("/add")
