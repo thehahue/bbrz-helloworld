@@ -32,4 +32,15 @@ public class PersonController {
     public List<Person> getAllPersons() {
         return personService.getAllPeople();
     }
+
+    @GetMapping("/person/find")
+    public Object findPerson(@RequestParam("id") Long id) {
+        Person person = personService.findById(id);
+
+        if (person == null) {
+            return "Keine Person mit der ID " + id + " gefunden.";
+        }
+
+        return person;
+    }
 }
