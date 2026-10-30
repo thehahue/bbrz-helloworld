@@ -2,13 +2,13 @@ spring:
   application:
     name: helloworld
   datasource:
-    url: jdbc:h2:mem:helloWorld
+    url: jdbc:h2:file:./data/helloWorld
     driver-class-name: org.h2.Driver
     username: admin
     password: admin
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
