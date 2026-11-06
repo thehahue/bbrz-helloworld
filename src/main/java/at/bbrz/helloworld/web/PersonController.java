@@ -1,13 +1,16 @@
 package at.bbrz.helloworld.web;
 
 import at.bbrz.helloworld.entity.Person;
-import at.bbrz.helloworld.repo.PersonRepository;
 import at.bbrz.helloworld.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
 
@@ -16,6 +19,14 @@ import java.util.List;
 public class PersonController {
     @Autowired
     private PersonService personService;
+
+    @PostMapping("/person/add")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Person createPerson(@RequestBody Person person) {
+        // Neue Personen bekommen ihre ID von der Datenbank.
+        person.setId(null);
+        return personService.save(person);
+    }
 
     @GetMapping("/person/add")
     public Person addPerson(@RequestParam("fn") String firstName, @RequestParam("ln") String lastName) {
